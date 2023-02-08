@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "543607551816",
+    "project_id": "moneyapp-218ca",
+    "storage_bucket": "moneyapp-218ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543607551816:android:fc7eadd8b5d4dfbcc5657d",
+        "android_client_info": {
+          "package_name": "com.example.moneyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543607551816-jjjlsei3vgj4t01bcom267eqce3pi7bq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyk-ye5wS6Ev4ccyF3AbbZMOuGesQ3jp4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543607551816-jjjlsei3vgj4t01bcom267eqce3pi7bq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

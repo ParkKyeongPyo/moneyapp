@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:moneyapp/route/home_screen.dart';
 import 'package:moneyapp/route/info_screen.dart';
-import 'package:moneyapp/route/rank_screen.dart';
 
 import 'appbar_route/edit_screen.dart';
-import 'appbar_route/profile_screen.dart';
+import 'package:moneyapp/appbar_route/profile_screen.dart';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+Future<void> main() async {
   runApp(const MaterialApp(
     title: 'Navigation Basics',
     home: MyApp(),
   ));
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -35,7 +41,6 @@ class _MyAppState extends State<MyApp> {
   static List<Widget> pages = <Widget>[
     const HomeScreen(),
     const InfoScreen(),
-    const RankScreen(),
   ];
 
   @override
@@ -58,7 +63,7 @@ class _MyAppState extends State<MyApp> {
               },
             ),
             IconButton(
-              icon: const Icon(Icons.account_circle_rounded),
+              icon: const Icon(Icons.settings),
               tooltip: 'Profile',
               onPressed: () {
                 Navigator.push(
@@ -80,11 +85,7 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-              label: 'Info',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.school),
-              label: 'Rank',
+              label: '정보',
             ),
           ],
           currentIndex: _selectedIndex,
