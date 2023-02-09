@@ -9,8 +9,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  var emailAddress = "";
-  var password = "";
+  String emailAddress = "";
+  String password = "";
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,19 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 onPressed: () {
                   LoginLogicWidget.signWithEmailAndPassword(
-                      emailAddress, password);
+                    context,
+                    emailAddress,
+                    password,
+                  );
                 },
                 child: const Text("로그인"),
               ),
               ElevatedButton(
                 onPressed: () {
                   LoginLogicWidget.createUserWithEmailAndPassword(
-                      emailAddress, password);
+                    emailAddress,
+                    password,
+                  );
                 },
                 child: const Text("새 계정 만들기"),
               ),

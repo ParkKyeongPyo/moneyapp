@@ -16,25 +16,48 @@ class LoginLogicWidget extends StatelessWidget {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+      } else if (e.code == "too-many-requests") {
+        print('요청이 너무 많습니다. 잠시 후 로그인해주세요');
       }
     } catch (e) {
       print(e);
     }
   }
 
-  static dynamic signWithEmailAndPassword(emailAddress, password) async {
+  static dynamic signWithEmailAndPassword(
+      BuildContext context, String emailAddress, String password) async {
     try {
+      //로그인 요청 코드
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
+
+      //로그인 성공시 코드
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        return const AlertDialog(
-          title: Text("Alert Dialog Title"),
-          content: Text("This is an alert dialog. Click OK to dismiss."),
-        );
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Error"),
+                content: const Text('Wrong password provided for that user.'),
+                actions: <Widget>[
+                  TextButton(
+                    child: const Text("뒤로가기"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            });
         print('Wrong password provided for that user.');
+      } else if (e.code == "too-many-requests") {
+        print('요청이 너무 많습니다. 잠시 후 로그인해주세요');
+      } else {
+        print('다시 시도해주세요');
       }
     }
   }

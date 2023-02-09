@@ -1,9 +1,19 @@
 import 'package:flutter/material.dart';
 
+
 import 'profile_widget/login_screen_widget.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  //로그인 상태 담긴 변수
+  bool isLoggin = false;
+  FirebaseUserWidget
 
   @override
   Widget build(BuildContext context) {
