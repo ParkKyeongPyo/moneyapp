@@ -20,6 +20,9 @@ class EditTargetCompany extends StatelessWidget {
                   border: OutlineInputBorder(),
                   labelText: '목표 금액',
                 ),
+                onChanged: (value) {
+                      _EditScreenState.currentMoney = int.parse(value);
+                    },
               ),
             ),
             SizedBox(

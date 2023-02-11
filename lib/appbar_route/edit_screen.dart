@@ -14,13 +14,44 @@ const List<Widget> jobList = <Widget>[
   Text('무직/학생'),
 ];
 
+const List<String> jobTextList = <String>[
+  "직장인",
+  "프리랜서",
+  "알바생",
+  "무직/학생",
+];
+
 const List<Widget> targetList = <Widget>[
   Text('있음'),
   Text('없음'),
 ];
 
+const List<String> targetTextList = <String>[
+  "있음",
+  "없음",
+];
+
 class EditScreen extends StatefulWidget {
-  const EditScreen({super.key});
+  String userID = "";
+  String? userEmail = "";
+
+  String target = "있음";
+  String job = "company";
+  int currentMoney = 0;
+  int targetMoney = 0;
+  int salary = 0;
+  int addIncome = 0;
+  int fixPay = 0;
+  int addPay = 0;
+
+//freelancer
+  int income = 0;
+
+//student
+  int pinMoney = 0;
+  int monthPay = 0;
+
+  EditScreen({super.key, required this.userID, required this.userEmail});
 
   @override
   State<EditScreen> createState() => _EditScreenState();
@@ -72,6 +103,8 @@ class _EditScreenState extends State<EditScreen> {
 
                         if (i == index) selectedTargetIndex = index;
                       }
+
+                      target = targetTextList[selectedTargetIndex];
                     });
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -102,6 +135,8 @@ class _EditScreenState extends State<EditScreen> {
 
                         if (i == index) selectedJobIndex = index;
                       }
+
+                      job = jobTextList[selectedJobIndex];
                     });
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -119,12 +154,15 @@ class _EditScreenState extends State<EditScreen> {
                 const SizedBox(height: 20),
                 SizedBox(
                   width: screenWidth - 26,
-                  child: const TextField(
+                  child: TextField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: '현재 보유 금액',
                     ),
+                    onChanged: (value) {
+                      EditScreen.currentMoney = int.parse(value);
+                    },
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -144,6 +182,10 @@ class _EditScreenState extends State<EditScreen> {
                     EditStudent(screenWidth: screenWidth)
                 ],
                 const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("저장"),
+                ),
               ],
             ),
           ),

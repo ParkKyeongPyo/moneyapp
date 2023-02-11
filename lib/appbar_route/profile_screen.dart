@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:moneyapp/appbar_route/profile_widget/login_logic_widget.dart';
 
 import 'profile_widget/login_screen_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+bool isLoggin = false;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -12,14 +15,27 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   //로그인 상태 담긴 변수
-  bool isLoggin = false;
-  FirebaseUserWidget
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final screenWidth = size.width;
     final screenHeight = size.height;
+
+    setState(() {
+      //isLoggin = FirebaseUserWidget.isLogginFunction(isLoggin);
+      FirebaseAuth.instance.authStateChanges().listen(
+        (User? user) {
+          if (user != null) {
+            isLoggin = true;
+          } else {
+            isLoggin = false;
+          }
+        },
+      );
+    });
+
+    print(isLoggin);
 
     return MaterialApp(
       home: Scaffold(
@@ -47,17 +63,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 width: screenWidth - 26,
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
-                );
-                  },
-                  child: const Text("로그인"),
-                ),
+                child: isLoggin
+                    ? const Text("내 정보")
+                    : TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text("로그인"),
+                      ),
               ),
               const SizedBox(
                 height: 15,
@@ -108,8 +126,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: screenWidth - 26,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text("기타"),
+                  children: [
+                    const Text("기타"),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    isLoggin
+                        ? TextButton(
+                            onPressed: () {
+                              setState(() {
+                                LoginLogicWidget.logout();
+                                isLoggin = false;
+                              });
+                            },
+                            child: const Text("로그아웃"),
+                          )
+                        : Container(),
                   ],
                 ),
               ),

@@ -10,13 +10,14 @@ import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MaterialApp(
     title: 'Navigation Basics',
     home: MyApp(),
   ));
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 }
 
 class MyApp extends StatefulWidget {
@@ -38,6 +39,10 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  //User 정보 변수
+  String userID = "";
+  String? userEmail = "";
+
   static List<Widget> pages = <Widget>[
     const HomeScreen(),
     const InfoScreen(),
@@ -45,6 +50,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        userID = user.uid;
+        userEmail = user.email;
+      }
+    });
+
+    print(userID);
+    print(userEmail);
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -57,7 +72,10 @@ class _MyAppState extends State<MyApp> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EditScreen(),
+                    builder: (context) => EditScreen(
+                      userID: userID,
+                      userEmail: userEmail,
+                    ),
                   ),
                 );
               },
