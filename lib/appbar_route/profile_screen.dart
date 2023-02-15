@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneyapp/appbar_route/profile_widget/login_logic_widget.dart';
+import 'package:moneyapp/appbar_route/profile_widget/nickname_widget.dart';
 
 import 'profile_widget/login_screen_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -64,7 +65,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 width: screenWidth - 26,
                 child: isLoggin
-                    ? const Text("내 정보")
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("내 정보"),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const NicknameWidget(),
+                                ),
+                              );
+                            },
+                            child: const Text("닉네임 설정"),
+                          ),
+                        ],
+                      )
                     : TextButton(
                         onPressed: () {
                           Navigator.push(

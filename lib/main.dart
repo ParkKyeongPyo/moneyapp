@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
   //User 정보 변수
   String userID = "";
   String? userEmail = "";
+  String? displayname = "";
 
   static List<Widget> pages = <Widget>[
     const HomeScreen(),
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
       if (user != null) {
         userID = user.uid;
         userEmail = user.email;
+        displayname = user.displayName;
       }
     });
 
@@ -63,7 +65,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("moneyApp"),
+          title: Text('$displayname님'),
           actions: [
             IconButton(
               icon: const Icon(Icons.edit),

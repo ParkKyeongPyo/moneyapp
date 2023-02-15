@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moneyapp/route/home_screen.dart';
 
 import 'edit_widget/edit_company.dart';
 import 'edit_widget/edit_free.dart';
@@ -35,26 +37,28 @@ class EditScreen extends StatefulWidget {
   String userID = "";
   String? userEmail = "";
 
-  String target = "있음";
-  String job = "company";
-  int currentMoney = 0;
-  int targetMoney = 0;
-  int salary = 0;
-  int addIncome = 0;
-  int fixPay = 0;
-  int addPay = 0;
+  static String target = "있음";
+  static String job = "직장인";
+  static int currentMoney = 0;
+  static int targetMoney = 0;
+  static int targetPeriod = 0;
+  static int salary = 0;
+  static int addIncome = 0;
+  static int fixPay = 0;
+  static int addPay = 0;
 
 //freelancer
-  int income = 0;
+  static int income = 0;
 
 //student
-  int pinMoney = 0;
-  int monthPay = 0;
+  static int pinMoney = 0;
+  static int monthPay = 0;
 
   EditScreen({super.key, required this.userID, required this.userEmail});
 
   @override
-  State<EditScreen> createState() => _EditScreenState();
+  State<EditScreen> createState() =>
+      _EditScreenState(userID: userID, userEmail: userEmail);
 }
 
 class _EditScreenState extends State<EditScreen> {
@@ -65,11 +69,18 @@ class _EditScreenState extends State<EditScreen> {
   var selectedJobIndex = 0;
   var selectedTargetIndex = 0;
 
+  String userID = "";
+  String? userEmail = "";
+
+  _EditScreenState({required this.userID, required this.userEmail});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final screenWidth = size.width;
     final screenHeight = size.height;
+
+    final db = FirebaseFirestore.instance;
 
     return MaterialApp(
       home: Scaffold(
@@ -104,7 +115,7 @@ class _EditScreenState extends State<EditScreen> {
                         if (i == index) selectedTargetIndex = index;
                       }
 
-                      target = targetTextList[selectedTargetIndex];
+                      EditScreen.target = targetTextList[selectedTargetIndex];
                     });
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -136,7 +147,7 @@ class _EditScreenState extends State<EditScreen> {
                         if (i == index) selectedJobIndex = index;
                       }
 
-                      job = jobTextList[selectedJobIndex];
+                      EditScreen.job = jobTextList[selectedJobIndex];
                     });
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -183,7 +194,82 @@ class _EditScreenState extends State<EditScreen> {
                 ],
                 const SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Map<String, dynamic> editData = {};
+
+                    if (EditScreen.target == "있음") {
+                      if (EditScreen.job == "직장인" || EditScreen.job == "알바생") {
+                        editData = {
+                          "target": EditScreen.target,
+                          "job": EditScreen.job,
+                          "currentMoney": EditScreen.currentMoney,
+                          "targetMoney": EditScreen.targetMoney,
+                          "targetPeriod": EditScreen.targetPeriod,
+                          "salary": EditScreen.salary,
+                          "addIncome": EditScreen.addIncome,
+                          "fixPay": EditScreen.fixPay,
+                          "addPay": EditScreen.addPay,
+                        };
+                      } else if (EditScreen.job == "프리랜서") {
+                        editData = {
+                          "target": EditScreen.target,
+                          "job": EditScreen.job,
+                          "currentMoney": EditScreen.currentMoney,
+                          "targetMoney": EditScreen.targetMoney,
+                          "targetPeriod": EditScreen.targetPeriod,
+                          "income": EditScreen.income,
+                          "addIncome": EditScreen.addIncome,
+                          "fixPay": EditScreen.fixPay,
+                          "addPay": EditScreen.addPay,
+                        };
+                      } else {
+                        editData = {
+                          "target": EditScreen.target,
+                          "job": EditScreen.job,
+                          "currentMoney": EditScreen.currentMoney,
+                          "targetMoney": EditScreen.targetMoney,
+                          "targetPeriod": EditScreen.targetPeriod,
+                          "pinMoney": EditScreen.pinMoney,
+                          "monthPay": EditScreen.monthPay,
+                        };
+                      }
+                    } else {
+                      if (EditScreen.job == "직장인" || EditScreen.job == "알바생") {
+                        editData = {
+                          "target": EditScreen.target,
+                          "job": EditScreen.job,
+                          "currentMoney": EditScreen.currentMoney,
+                          "salary": EditScreen.salary,
+                          "addIncome": EditScreen.addIncome,
+                          "fixPay": EditScreen.fixPay,
+                          "addPay": EditScreen.addPay,
+                        };
+                      } else if (EditScreen.job == "프리랜서") {
+                        editData = {
+                          "target": EditScreen.target,
+                          "job": EditScreen.job,
+                          "currentMoney": EditScreen.currentMoney,
+                          "income": EditScreen.income,
+                          "addIncome": EditScreen.addIncome,
+                          "fixPay": EditScreen.fixPay,
+                          "addPay": EditScreen.addPay,
+                        };
+                      } else {
+                        editData = {
+                          "target": EditScreen.target,
+                          "job": EditScreen.job,
+                          "currentMoney": EditScreen.currentMoney,
+                          "pinMoney": EditScreen.pinMoney,
+                          "monthPay": EditScreen.monthPay,
+                        };
+                      }
+                    }
+
+                    db.collection("UserData").doc(userID).set(editData);
+
+                    //저장 누를때마다 info 초기화
+                    HomeScreen.info = {};
+                  },
                   child: const Text("저장"),
                 ),
               ],

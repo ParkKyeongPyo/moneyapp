@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../edit_screen.dart';
+
 class EditTargetFree extends StatelessWidget {
   final double screenWidth;
 
@@ -14,22 +16,28 @@ class EditTargetFree extends StatelessWidget {
           children: [
             SizedBox(
               width: screenWidth / 2 - 20,
-              child: const TextField(
+              child: TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '목표 금액',
                 ),
+                onChanged: (value) {
+                  EditScreen.targetMoney = int.parse(value);
+                },
               ),
             ),
             SizedBox(
               width: screenWidth / 2 - 20,
-              child: const TextField(
+              child: TextField(
                 keyboardType: TextInputType.datetime,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '목표 기간',
                 ),
+                onChanged: (value) {
+                  EditScreen.targetPeriod = int.parse(value);
+                },
               ),
             ),
           ],
@@ -40,22 +48,28 @@ class EditTargetFree extends StatelessWidget {
           children: [
             SizedBox(
               width: screenWidth / 2 - 20,
-              child: const TextField(
+              child: TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '이번달 수입',
                 ),
+                onChanged: (value) {
+                  EditScreen.income = int.parse(value);
+                },
               ),
             ),
             SizedBox(
               width: screenWidth / 2 - 20,
-              child: const TextField(
+              child: TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '이번달 추가 수입',
                 ),
+                onChanged: (value) {
+                  EditScreen.addIncome = int.parse(value);
+                },
               ),
             ),
           ],
@@ -66,22 +80,28 @@ class EditTargetFree extends StatelessWidget {
           children: [
             SizedBox(
               width: screenWidth / 2 - 20,
-              child: const TextField(
+              child: TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '고정 지출비',
                 ),
+                onChanged: (value) {
+                  EditScreen.fixPay = int.parse(value);
+                },
               ),
             ),
             SizedBox(
               width: screenWidth / 2 - 20,
-              child: const TextField(
+              child: TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '이번달 추가 지출비',
                 ),
+                onChanged: (value) {
+                  EditScreen.addPay = int.parse(value);
+                },
               ),
             ),
           ],

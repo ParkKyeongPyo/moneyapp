@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,8 @@ class LoginLogicWidget extends StatelessWidget {
         email: emailAddress,
         password: password,
       );
+      var rnd = Random().nextInt(99999) + 1;
+      await FirebaseAuth.instance.currentUser?.updateDisplayName('익명$rnd');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
