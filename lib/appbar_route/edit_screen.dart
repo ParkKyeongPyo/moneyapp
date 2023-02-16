@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:moneyapp/fun_widget/dialog_widget.dart';
 import 'package:moneyapp/route/home_screen.dart';
 
 import 'edit_widget/edit_company.dart';
@@ -269,6 +270,12 @@ class _EditScreenState extends State<EditScreen> {
 
                     //저장 누를때마다 info 초기화
                     HomeScreen.info = {};
+
+                    DialogWidget.showDialogTwoOptionAlert(
+                        context: context, title: "필독", message: "dd");
+
+                    //저장시 홈화면으로 돌아감.
+                    //Navigator.pop(context, 'Pop is true');
                   },
                   child: const Text("저장"),
                 ),

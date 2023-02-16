@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneyapp/appbar_route/profile_widget/login_logic_widget.dart';
 import 'package:moneyapp/appbar_route/profile_widget/nickname_widget.dart';
 
+import '../main.dart';
 import 'profile_widget/login_screen_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -45,7 +46,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: const Icon(Icons.arrow_back_ios_new_rounded),
             tooltip: 'Return',
             onPressed: () {
-              Navigator.pop(context);
+              //Navigator.pop(context, 'Pop is true');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MyApp(),
+                ),
+              );
             },
           ),
           title: const Text("설정"),

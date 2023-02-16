@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:moneyapp/main.dart';
 
 class LoginLogicWidget extends StatelessWidget {
   const LoginLogicWidget({super.key});

@@ -9,6 +9,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'fun_widget/dialog_widget.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -31,7 +33,7 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
 
   // bottom navigation bar variable and function.
-  int _selectedIndex = 0;
+  static int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,14 +42,22 @@ class _MyAppState extends State<MyApp> {
   }
 
   //User 정보 변수
-  String userID = "";
-  String? userEmail = "";
-  String? displayname = "";
+  static String userID = "";
+  static String? userEmail = "";
+  static String? displayname = "";
 
-  static List<Widget> pages = <Widget>[
-    const HomeScreen(),
-    const InfoScreen(),
-  ];
+  //로그인 상태 변수
+  static bool isLoggin = true;
+
+  //String _value = "";
+  //bool _isChildUpdated = false;
+
+  /*void _update(String value) {
+    setState(() {
+      _isChildUpdated = true;
+      _value = value;
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +66,16 @@ class _MyAppState extends State<MyApp> {
         userID = user.uid;
         userEmail = user.email;
         displayname = user.displayName;
+        isLoggin = true;
+      } else {
+        isLoggin = false;
       }
     });
+
+    List<Widget> pages = <Widget>[
+      const HomeScreen(),
+      const InfoScreen(),
+    ];
 
     print(userID);
     print(userEmail);
@@ -65,21 +83,34 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('$displayname님'),
+          title: Column(
+            children: [
+              const Text("돈모아"),
+              isLoggin ? Text('$displayname') : const Text(""),
+            ],
+          ),
           actions: [
             IconButton(
               icon: const Icon(Icons.edit),
               tooltip: 'Edit',
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditScreen(
-                      userID: userID,
-                      userEmail: userEmail,
+                if (isLoggin) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditScreen(
+                        userID: userID,
+                        userEmail: userEmail,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  DialogWidget.showDialogAlert(
+                    context: context,
+                    title: "알림",
+                    message: "로그인 후 이용할 수 있습니다.",
+                  );
+                }
               },
             ),
             IconButton(

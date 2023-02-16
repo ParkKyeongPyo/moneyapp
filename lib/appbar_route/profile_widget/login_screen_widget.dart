@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 10,
               ),
               TextField(
-                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '계정 비밀번호',
