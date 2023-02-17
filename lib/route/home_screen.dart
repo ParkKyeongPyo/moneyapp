@@ -155,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // If the Future is not yet complete, show a loading spinner
-              return const CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
             if (snapshot.hasData) {
               // If the Future is complete and has data, show the data

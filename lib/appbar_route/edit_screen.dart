@@ -10,6 +10,8 @@ import 'edit_widget/edit_target_company.dart';
 import 'edit_widget/edit_target_free.dart';
 import 'edit_widget/edit_target_student.dart';
 
+import 'package:flutter/services.dart';
+
 const List<Widget> jobList = <Widget>[
   Text('직장인'),
   Text('프리랜서'),
@@ -287,3 +289,4 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 }
+
