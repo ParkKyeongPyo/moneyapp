@@ -163,34 +163,36 @@ class _HomeScreenState extends State<HomeScreen> {
               // If the Future is complete and has data, show the data
               print("hasData");
               print(snapshot.data);
-              return Center(
-                child: HomeScreen.userID != ""
-                    ? HomeScreen.info['category'] == 1
-                        ? TargetCompany(
-                            info: HomeScreen.info,
-                          )
-                        : HomeScreen.info['category'] == 2
-                            ? TargetFree(
-                                info: HomeScreen.info,
-                              )
-                            : HomeScreen.info['category'] == 3
-                                ? TargetStudent(
-                                    info: HomeScreen.info,
-                                  )
-                                : HomeScreen.info['category'] == 4
-                                    ? Company(
-                                        info: HomeScreen.info,
-                                      )
-                                    : HomeScreen.info['category'] == 5
-                                        ? Free(
-                                            info: HomeScreen.info,
-                                          )
-                                        : HomeScreen.info['category'] == 6
-                                            ? Student(
-                                                info: HomeScreen.info,
-                                              )
-                                            : const Text("정보를 먼저 작성해주세요.")
-                    : const Text("로그인 후 이용하세요"),
+              return SingleChildScrollView(
+                child: Center(
+                  child: HomeScreen.userID != ""
+                      ? HomeScreen.info['category'] == 1
+                          ? TargetCompany(
+                              info: HomeScreen.info,
+                            )
+                          : HomeScreen.info['category'] == 2
+                              ? TargetFree(
+                                  info: HomeScreen.info,
+                                )
+                              : HomeScreen.info['category'] == 3
+                                  ? TargetStudent(
+                                      info: HomeScreen.info,
+                                    )
+                                  : HomeScreen.info['category'] == 4
+                                      ? Company(
+                                          info: HomeScreen.info,
+                                        )
+                                      : HomeScreen.info['category'] == 5
+                                          ? Free(
+                                              info: HomeScreen.info,
+                                            )
+                                          : HomeScreen.info['category'] == 6
+                                              ? Student(
+                                                  info: HomeScreen.info,
+                                                )
+                                              : const Text("정보를 먼저 작성해주세요.")
+                      : const Text("로그인 후 이용하세요"),
+                ),
               );
             }
             if (snapshot.hasError) {
